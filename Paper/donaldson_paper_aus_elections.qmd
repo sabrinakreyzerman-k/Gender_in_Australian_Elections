@@ -1,5 +1,5 @@
 ---
-title: "Gender Differences in Australian Political Parties"
+title: "Do gender quotas increase the election of female MPs? An analysis of the correlation between intra-party gender quotas and electoral results in Australia"
 author: "Sabrina Kreyzerman"
 thanks: "Code and data from this analysis are available at: https://github.com/sabrinakreyzerman-k/Donaldson_Paper_Gender_in_Australian_Elections."
 date: today
@@ -18,15 +18,29 @@ bibliography: references.bib
 ---
 
 ```{r}
-#| echo: false
-#| message: false
-#| warning: false
+#| label: setup
 
 library(tidyverse) # A collection of data-related packages
 library(janitor) # Helps clean datasets
 library(AustralianPoliticians)
-
+library(knitr)
+library(kableExtra)
+library(here)
 ```
+
+
+```{r}
+#| label: load-data
+
+## Read in datasets ##
+cleaned_politicians_data <- read_csv(here("Data/Clean/cleaned_politicians_data.csv"))
+cleaned_party_data <- read_csv(here("Data/Clean/cleaned_party_data.csv"))
+cleaned_mp_data <- read_csv(here("Data/Clean/cleaned_mp_data.csv"))
+combined_politician_dataset <- read_csv(here("Data/Clean/combined_politician_dataset.csv"))
+```
+
+
+
 
 # Introduction
 
@@ -36,302 +50,55 @@ Introduction goes here.
 
 ## Data Collection
 
-Data Collection & Methodology goes here.
+Data Collection goes here.
+
+## Data Overview
+
+```{r}
+#| label: tbl-female-labor-mps
+#| tbl-cap: "Number of female Labor Party MPs elected directly following new gender quotas"
+
+combined_politician_dataset |> 
+  filter(year_elected == '1993' | year_elected == "1996" | year_elected == "2013" | year_elected == "2016") |>
+  filter(gender == "female") |>
+  filter(partyName.x == 'Australian Labor Party') |>
+  group_by(year_elected) |>
+  count() |>
+  ungroup() |>
+  kable(
+    col.names = c("Election Year", "Number of Female MPs"),
+    booktabs = TRUE)
+```
+
+In @tbl-female-labor-mps, blah blah blah.
+
+```{r}
+#| label: tbl-female-liberal-mps
+#| tbl-cap: "Number of female Liberal Party MPs elected directly following new Labor Party gender quotas"
+
+combined_politician_dataset |> 
+  filter(year_elected == '1993' | year_elected == "1996" | year_elected == "2013" | year_elected == "2016") |>
+  filter(gender == "female") |>
+  filter(partyName.x == 'Liberal Party of Australia') |>
+  group_by(year_elected) |>
+  count() |>
+  ungroup() |>
+  kable(
+    col.names = c("Election Year", "Number of Female MPs"),
+    booktabs = TRUE)
+```
 
 # Findings
 
 Findings goes here.
 
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
 
-#### Download data ####
-politician_data <- get_auspol("all") 
-
-party_data <- get_auspol("allbyparty")
-
-mp_data <- get_auspol("mps")
-
-#### Clean data ####
-clean_politician_data <- politician_data |>
-  select(uniqueID, displayName, gender, birthDate, member)
-
-clean_party_data <- party_data |>
-  select(uniqueID, partyAbbrev, partyName, partySimplifiedName)
-
-clean_mp_data <- mp_data |>
-  select(uniqueID, mpFrom, mpTo)
-
-#### Save dataset ####
-write_csv(x = clean_politician_data, file = "politicians_data.csv")
-
-write_csv(x = clean_party_data, file = "party_data.csv")
-
-write_csv(x = clean_mp_data, file = "mp_data.csv")
-
-#### Match up datasets ####
- clean_politician_data <- clean_politician_data |>
-  left_join(clean_party_data, by = "uniqueID")
-
-clean_politician_data <- clean_politician_data |>
-  left_join(clean_mp_data, by = "uniqueID")
-
-#### Save match up dataset ####
-write_csv(clean_politician_data, "combined_politician_dataset.csv")
-
-#### Read in dataset ####
-combined_dataset <- read_csv("combined_politician_dataset.csv")
-
-#### Read in the data ####
-## Code sourced from: https://tellingstorieswithdata.com/02-drinking_from_a_fire_hose.html#australian-elections
-raw_elections_data <-
-  read_csv(
-    file = 
-      "https://results.aec.gov.au/27966/website/Downloads/HouseMembersElectedDownload-27966.csv",
-    show_col_types = FALSE,
-    skip = 1)
-
-# We have read the data from the AEC website. We may like to save
-# it in case something happens or they move it.
-write_csv(
-  x = raw_elections_data,
-  file = "australian_voting.csv"
-)
-
-```
-
-
-```{r}
-#| message: false
-#| echo: false
-#| warning: false
-
-## Load packages ##
-library(tidyverse)
-library(knitr)
-library(janitor)
-library(kableExtra)
-
-## Read in data ##
-combined_dataset <- read_csv("combined_politician_dataset.csv")
-```
-
-For more information, see our @tbl-gender_party. 
-
-```{r}
-#| message: false
-#| echo: false
-#| label: tbl-gender_party
-#| tbl-cap: Number of MPs broken down by gender and party
-
-combined_dataset |> 
-  filter(partySimplifiedName == "Liberals" | partySimplifiedName == "Labor") |>
-  group_by(gender, partySimplifiedName) |>
-  count() |>
-  ungroup() |>
-  mutate(percentage = round(n / sum(n) * 100, 2)) |>
-  kable(
-    col.names = c("Gender", "Party", "Number of MPs",	"Percentage of MPs"),
-  booktabs = TRUE)
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-simulated_data <-
-  tibble(
-    # Use 1 through to 151 to represent each division
-    "Division" = 1:151,
-    # Randomly pick an option, with replacement, 151 times
-    "Party" = sample(
-      x = c("Liberal", "Labor", "National", "Green", "Other"),
-      size = 151,
-      replace = TRUE
-    )
-  )
-
-simulated_data
-
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-#### Read in the data ####
-raw_elections_data <-
-  read_csv(
-    file = 
-      "https://results.aec.gov.au/27966/website/Downloads/HouseMembersElectedDownload-27966.csv",
-    show_col_types = FALSE,
-    skip = 1
-  )
-
-# We have read the data from the AEC website. We may like to save
-# it in case something happens or they move it.
-write_csv(
-  x = raw_elections_data,
-  file = "australian_voting.csv"
-)
-
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-#### Basic cleaning ####
-raw_elections_data <-
-  read_csv(
-    file = "australian_voting.csv",
-    show_col_types = FALSE
-  )
-
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-# Make the names easier to type
-cleaned_elections_data <-
-  clean_names(raw_elections_data)
-
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-cleaned_elections_data <-
-  cleaned_elections_data |>
-  select(
-    division_nm,
-    party_nm
-  )
-
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-names(cleaned_elections_data)
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-cleaned_elections_data <-
-  cleaned_elections_data |>
-  rename(
-    division = division_nm,
-    elected_party = party_nm
-  )
-
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-cleaned_elections_data$elected_party |>
-  unique()
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-cleaned_elections_data <-
-  cleaned_elections_data |>
-  mutate(
-    elected_party =
-      case_match(
-        elected_party,
-        "Australian Labor Party" ~ "Labor",
-        "Liberal National Party of Queensland" ~ "Liberal",
-        "Liberal" ~ "Liberal",
-        "The Nationals" ~ "Nationals",
-        "The Greens" ~ "Greens",
-        "Independent" ~ "Other",
-        "Katter's Australian Party (KAP)" ~ "Other",
-        "Centre Alliance" ~ "Other"
-      )
-  )
-
-head(cleaned_elections_data)
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-write_csv(
-  x = cleaned_elections_data,
-  file = "cleaned_elections_data.csv"
-)
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-#### Read in the data ####
-cleaned_elections_data <-
-  read_csv(
-    file = "cleaned_elections_data.csv",
-    show_col_types = FALSE
-  )
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-cleaned_elections_data |>
-  count(elected_party)
-```
-
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-cleaned_elections_data |>
-  ggplot(aes(x = elected_party)) + # aes abbreviates "aesthetics" 
-  geom_bar()
-
-cleaned_elections_data |>
-  ggplot(aes(x = elected_party)) +
-  geom_bar() +
-  theme_minimal() + # Make the theme neater
-  labs(x = "Party", y = "Number of seats") # Make labels more meaningful
-
-```
+ 
 # Discussion
 
 Discussion goes here.
 
 # Exclusions & Future Research
-
-One variable I chose to exclude from my data set was the age of political candidates. This decision was made because my objective with this analysis was to zero-in on the implications of gender within and across political parties. There is research to support that age is also at the forefront of considerations taken by voters when exercising their electoral rights (…). This is a compelling site for future study. While beyond the scope of my analysis, future research can look to advance … . Future research can focus on how age either increases or decreases chances of election, why voters may be deterred or compelled by younger or older candidates, and how age impacts electoral results domestically and cross-nationally.
 
 # Conclusion
 
