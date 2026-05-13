@@ -54,6 +54,8 @@ The dataset utilized for this paper was primarily obtained from the Australian P
 
 The Labor and Liberal Parties in Australia are ideal units of analysis for this paper as the Labor Party has actively adopted and increased intra-party gender quotas, while the Liberal Party has firmly rejected such mandates. Contrasting the two parties allows for a comparative analysis when investigating the effectiveness of gender quotas in increasing female political representation. Furthermore, the Labor Party has periodically updated their gender quotas since their inaugural adoption, meaning we can examine how increased gender quotas have affected the election of female MPs in Australia over time.
 
+The data obtained for this paper was a sample of 1,783 Australian political candidates. In preparing the datasets for my purposes, [combining datasets]. Upon cleaning the dataset for analysis, political candidates who were not elected to Parliament were excluded from the study. Furthermore, the age of political candidates was excluded because the age of many of the candidates was undocumented, ruling out its utility as a control variable. Notably, the data includes candidates that may have been re-elected.
+
 ## Female Labor Party MPs elected to Parliament following gender quotas
 
 ```{r}
