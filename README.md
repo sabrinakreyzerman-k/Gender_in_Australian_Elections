@@ -1,4 +1,4 @@
-# Do party gender quotas increase the election offemale MPs to parliament? An analysis of thecorrelation between intra-party gender quotasand electoral results in Australia
+# Do party gender quotas increase the election of female MPs to parliament? An analysis of thecorrelation between intra-party gender quotasand electoral results in Australia
 ## Abstract
 This paper explores the effectiveness of party gender quotas in addressing theunderrepresentation of women in parliament. With Australia as a case study,I particularly look into the Australian Labor Party and the Liberal Party ofAustralia, and their respective attitudes towards gender quotas and female politicalrepresentation. This paper finds some evidence to support that party gender quotascan increase the election of female MPs to parliament. However, other factors maycontribute to the number of female party members nominated as candidates and in which divisions.
 ## Repository Contents
