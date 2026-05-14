@@ -80,9 +80,7 @@ Upon cleaning the dataset for analysis, political candidates who were not electe
 
 ## Female Labor Party MPs elected to Parliament following gender quotas
 
-Following their introduction in 1994, gender quotas within the Australian Labor Party were amended in 2012 and 2015, identifying new ratio objectives. @tbl-female-labor-mps displays the number of female Labor MPs elected to the Australian parliament in the election years directly following the adoption and revision of intra-party gender quotas. These elections occurred in 1996 (38th Parliament), 2013 (44th Parliament), and 2016 (45th Parliament) ([source]). Additionally, @tbl-female-labor-mps incorporates data from the election year immediately preceding the enactment of the first Labor Party gender quota in 1993 (37th Parliament), as well as data from the 2010 election (43rd Parliament), directly prior to the 2012 quota amendments. These election years were included to provide a snapshot of the election of female MPs to parliament predating Labor Party gender quotas. The 2004 election was also included as this election year followed the targeted year by which the Labor Party set out to acheive a 35% gender quota (2002).
-
-It is worth mentioning that in 2010, Australia elected Julia Gillard of the Labor Party, the first woman to ever hold office as Prime Minister ([source]).
+Following their introduction in 1994, gender quotas within the Australian Labor Party were amended in 2012 and 2015, identifying new ratio objectives. @tbl-female-labor-mps displays the number of female Labor MPs elected to the Australian parliament in the election years directly following the adoption and revision of intra-party gender quotas. These elections occurred in 1996 (38th Parliament), 2013 (44th Parliament), and 2016 (45th Parliament) ([source]). Additionally, @tbl-female-labor-mps incorporates data from the election year immediately preceding the enactment of the first Labor Party gender quota in 1993 (37th Parliament), as well as data from the 2010 election (43rd Parliament), directly prior to the 2012 quota amendments. These election years were included to provide a snapshot of the election of female MPs to parliament predating Labor Party gender quotas. The 2004 election was also included as this election year followed the targeted year by which the Labor Party set out to acheive a 35% gender quota (2002). It is worth mentioning that in 2010, Australia elected Julia Gillard of the Labor Party, the first woman to ever hold office as Prime Minister ([source]).
 
 ```{r}
 #| label: tbl-female-labor-mps
@@ -103,13 +101,15 @@ combined_politician_dataset |>
 
 The election years in @tbl-female-labor-mps were selected in order to produce a simplified and conceivable model that could offer insight into the immediate impact of party gender quotas. A more comprehensive scope of election years is presented later in this paper in @fig-female-mps-over-time.
 
-A negative effect can be observed between the election years directly preceding and following the introduction of the first Labor Party gender quotas in 1994. Merely 13% of MPs elected to parliament in 1996 were female, while nearly 23% were elected the prior election year, 1993.
+A negative effect can be observed between the election years directly preceding and following the introduction of the first Labor Party gender quotas in 1994. Merely 13% of MPs elected to parliament in 1996 were female, while nearly 23% were elected the prior election year, 1993. However, 44% of Labor MPs elected in 2004 were female. The targeted year for the implementation of gender quotas within the Labor Party was 2002, meaning an immediate effect can be exhibited between intra-party gender quotas and the election of female MPs to parliament.
 
 The largest immediate difference between female MPs elected across subsequent election years is observed from 2010 to 2013. Following the Labor Party's gender quota revision in 2012, which required that at least 40% of elected Labor MPs be female, the number of female MPs elected to parliament increased by 15%. Not only were more than 40% of female Labor Party members were nominated as candidates, but approximately 45% were elected relative to male candidates. While other factors may be at play, which will be taken up in a later section of the paper, this finding suggests that the 2012 increased Labor Party gender quota was effective in increasing the number of female MPs elected to Australian parliament.
 
 Lastly, there is a marginal difference between the election of female MPs from 2013 to 2016, when the percentage of female MPs elected to parliament decreased by roughly 3%. The 2016 Australian election directly followed the Labor Party's announcement in 2015 of new gender quota objectives for 2022 and 2025: 45 per cent and 50 per cent female candidates, respectively.
 
 ## Female Liberal Party MPs elected to Parliament in the same election years
+
+The same election years selected in @tbl-female-labor-mps were enumerated in @tbl-female-liberal-mps to evaluate the same questions with respect to the Australian Liberal Party. While the Liberal Party has never adopted gender quotas, Beauregard and Taflaga (2023, 3364) suggest gender quotas within one party might, in some cases, have a contagious effect on candidate nominations within competing parties. More importantly, isolating the same set of data from the Liberal Party allows us to identify whether gender quotas actually are a significant contributor to the election of female MPs.
 
 ```{r}
 #| label: tbl-female-liberal-mps
@@ -127,6 +127,10 @@ combined_politician_dataset |>
   col.names = c("Election Year", "Number of Female MPs", "Number of Male MPs", "Percentage of female MPs"),
   booktabs = TRUE)
 ```
+
+The first noteworthy observation from @tbl-female-liberal-mps is that the percentage of female Liberal MPs elected to parliament in 1996, following the Labor Party's introduction of gender quotas, increased by 10% from the previous election year. After 1996, this figure substantially decreased to 7%, with the Liberal Party not having more than 26% female elected MPs again (until 2016, as far as @tbl-female-liberal-mps reveals).
+
+A marginal increase is revealed in the percentage of female Liberal MPs elected to parliament in the consecutive election years of 2010 and 2013, from 22% to 26%. Lastly, this figure drops to 18% in the following election in 2016.
 
 ## Labor Party and Liberal Party Female Candidates Elected to Australian Parliament between 1983 and 2021
 
@@ -179,9 +183,13 @@ ggplot(mapping = aes(x = year_elected, y = n_females,
   )
 ```
 
+@fig-female-mps-over-time demonstrates that the election of female Labor Party MPs and female Liberal Party MPs to parliament were relatively matched up between 1995 to 2001, 2010 to 2013,and 2018 to 2019. Because the Labor Party has gender quotas while the Liberal Party does not, the patterns observed in @fig-female-mps-over-time indicate that perhaps some mechanisms other than gender quotas are being effectively employed within the Liberal Party.
+
+Similarly, Beauregard and Taflaga (2023, 363) note that even though the Liberal Party has rejected adopting intra-party gender quotas, more female MPs from the Liberal Party have historically been elected to parliament in comparison to female Labor Party MPs.
+
 # Limitations
 
-Importantly, the original datasets do not reveal whether the Labor Party met their gender quota objectives and when, meaning it is important to differentiate between the announcement of the quota and its achievement. For instance, the introduction of gender quotas within the Labor Party were announced in 1994 with hopes of achieving the targeted 35% of female candidates by 2002. This could perhaps explain why the number of female MPs elected to parliament in 1996 decreased from the prior election, but rose to 44% in 2004. 
+Importantly, the original datasets do not reveal whether the Labor Party met their gender quota objectives and when, meaning it is important to differentiate between the announcement of the quota and its achievement. For instance, the introduction of gender quotas within the Labor Party were announced in 1994 with hopes of achieving the targeted 35% of female candidates by 2002. This could perhaps explain why the number of female MPs elected to parliament in 1996 decreased from the prior election, but rose to 44% in 2004. Secondly, more research is needed to understand what alternatives to gender quotas the Liberal Party has adopted to address the underrepresentation of female candidates in their party.
 
 While the dataset used for this paper is merely a sample of Australian political candidates, the findings in this paper are relatively consistent with Hough (2021)'s observations that the percentage of female MPs forming government in Australia has increased from 12% in 1994 to nearly 48% in 2021. With respect to particular election years noted in the dataset, it is important to be weary that the sample of data used is not perfectly representative of all Australian political candidates, meaning results with a different sample of the same size may differ slighlty from those found in this paper. A larger sample size is necessary for a more robust investigation.
 
@@ -189,6 +197,8 @@ Lastly, though not included in the dataset, early research from the latest Austr
 
 # Conclusion
 
-Conclusion goes here.
+
+
+I invite future research to investigate the shortcomings of gender quotas, as well as other factors that may be contributing to the underrepresentation of women in parliament.
 
 # References
